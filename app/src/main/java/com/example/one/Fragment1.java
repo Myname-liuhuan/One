@@ -38,7 +38,7 @@ public class Fragment1 extends Fragment {
         // Required empty public constructor
     }
 
-    @Override
+    @Override//加载Fragment的页面布局
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mView=inflater.inflate(R.layout.fragment_1, container, false);
@@ -49,7 +49,7 @@ public class Fragment1 extends Fragment {
 
 
     @Override
-    public void onActivityCreated(Bundle bundle) {//在这进行数据获取Contact
+    public void onActivityCreated(Bundle bundle) {//在这进行数据获取Contact，并保存到数据库
         super.onActivityCreated(bundle);
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_CONTACTS)!= PackageManager.PERMISSION_GRANTED)
         {
@@ -86,7 +86,7 @@ public class Fragment1 extends Fragment {
     }
 
 
-    public void readContact(){
+    public void readContact(){//读取通讯录到数据库
         Cursor cursor=null;
         try{
             Log.d("Tag","try");
@@ -94,14 +94,14 @@ public class Fragment1 extends Fragment {
             if (cursor.moveToFirst()){
                 Log.d("Tag","readContact onActivityCreated");
                 contactDataList.clear();//每次读取全部的通讯录的时候清空，免得重复
-                while (cursor.moveToNext()){
+                do {
                     Log.d("Tag","进入循环");
                     String contactName=cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
                     String phoneNumber=cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                     ContactData contactData=new ContactData(contactName,phoneNumber);
                     contactDataList.add(contactData);
                     Log.d("Tag","读取Cursor");
-                }
+                }while (cursor.moveToNext());
             }
         }catch (Exception e){
             e.printStackTrace();

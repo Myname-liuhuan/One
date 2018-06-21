@@ -55,7 +55,7 @@ public class Fragment2 extends Fragment {
         Cursor cursor=db.query("message",null,null,null,null,null,null);
         mContactData.clear();
         if (cursor.moveToFirst()){
-            while(cursor.moveToNext()){
+            do{
                 String Name=cursor.getString(cursor.getColumnIndex("Name"));
                 String phoneNumber=cursor.getString(cursor.getColumnIndex("phoneNumber"));
                 ContactData contactData=new ContactData(Name,phoneNumber);
@@ -66,7 +66,7 @@ public class Fragment2 extends Fragment {
                     TextView textView=new TextView(getContext());
                     LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
                     textView.setLayoutParams(params);
-                    textView.setText(Name+"/n"+phoneNumber);
+                    textView.setText(Name+"\n"+phoneNumber);
                     textView.setTextSize(20);
                     linearLayout.addView(textView);
 
@@ -82,7 +82,7 @@ public class Fragment2 extends Fragment {
 
                 }
 
-            }
+            }while(cursor.moveToNext());
         }
         add=false;
         db.close();
@@ -118,7 +118,7 @@ public class Fragment2 extends Fragment {
         TextView textView=new TextView(getContext());
         LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
         textView.setLayoutParams(params);
-        textView.setText(Name+"/n"+phoneNumber);
+        textView.setText(Name+"\n"+phoneNumber);
         textView.setTextSize(20);
         linearLayout.addView(textView);
         textView.setOnClickListener(new View.OnClickListener() {
